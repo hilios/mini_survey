@@ -12,6 +12,7 @@ gem 'uglifier'
 gem 'carrierwave'
 gem 'jquery-rails'
 gem 'simple_form'
+# gem 'rmagick'
 
 group :development, :test do
   gem 'capybara'
