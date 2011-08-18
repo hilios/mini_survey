@@ -1,6 +1,15 @@
 "pt-BR":
+  errors:
+    messages: &errors_messages
+      not_a_email: "não é válido"
   activerecord:
     models:
       user: "usuário"
     attributes:
+      user:
+          name: "nome"
+          email: "email"
+          password: "senha"
+          password_confirmation: "confirme sua senha"
+          
       
