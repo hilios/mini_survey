@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Survey::Application.load_tasks
+MiniSurvey::Application.load_tasks
