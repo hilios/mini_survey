@@ -6,6 +6,7 @@ describe User do
     it { should have_db_column(:email).of_type(:string) }
     it { should have_db_column(:password_digest).of_type(:string) }
     it { should have_db_column(:last_login).of_type(:datetime) }
+    it { should have_db_column(:avatar).of_type(:string) }
     it { should have_db_index(:email) }
     # it { should have_many(:surveys) }
   end
@@ -55,6 +56,13 @@ describe User do
       current_date = Time.now
       @user.authenticate(@user.password).should be_true
       @user.last_login.gmt_offset.should == current_date.gmt_offset
+    end
+  end
+  
+  describe "avatar" do
+    it "should be an instance of avatar uploader" do
+      user = FactoryGirl.create(:user)
+      user.avatar.instance_of?(AvatarUploader).should be_true
     end
   end
 end

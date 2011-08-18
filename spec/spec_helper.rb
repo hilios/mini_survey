@@ -7,10 +7,21 @@ require 'rspec/rails'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+# Switch off the processors
+CarrierWave.configure do |config|
+  config.enable_processing = false
+end
+
 RSpec.configure do |config|
   config.mock_with :rspec
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
+  
   config.use_transactional_fixtures = true
+  
+  config.include CarrierWave::Test::Matchers
+  
+  config.after(:suite) do
+    user = FactoryGirl.build(:user)
+    store_path = File.dirname File.dirname(user.avatar.store_path)
+    FileUtils.rm_rf(store_path)
+  end
 end

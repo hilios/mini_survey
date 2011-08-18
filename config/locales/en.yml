@@ -1,6 +1,11 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
-
 en:
-  hello_world: "Hello World"
+  errors:
+    messages:
+      carrierwave_processing_error: 'cannot resize image.'
+      carrierwave_integrity_error: 'not an image'
+      wrong_size: "is the wrong size (should be %{file_size})"
+      size_too_small: "is to small (should be at least %{file_size})"
+      size_too_big: "is to big (should be at most %{file_size})"
