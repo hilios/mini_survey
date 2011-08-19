@@ -8,7 +8,7 @@ describe User do
     it { should have_db_column(:last_login).of_type(:datetime) }
     it { should have_db_column(:avatar).of_type(:string) }
     it { should have_db_index(:email) }
-    # it { should have_many(:surveys) }
+    it { should have_many(:surveys) }
   end
   
   describe "validations" do
@@ -28,7 +28,22 @@ describe User do
     it { should_not allow_mass_assignment_of(:password_digest) }
     it { should ensure_length_of(:password).is_at_least(3) }
     
-    describe "on create" do
+    context "password confirmation" do
+      before do
+        @user = FactoryGirl.build(:user)
+      end
+      
+      it "should have a password confirmation field" do
+        @user.respond_to?(:password_confirmation)
+      end
+
+      it "should not be valid with wrong password confirmation" do
+        @user.password_confirmation = "wrong"
+        @user.should_not be_valid
+      end
+    end
+    
+    context "on create" do
       subject { FactoryGirl.build(:user) }
       
       it { should validate_presence_of(:password) }
@@ -63,6 +78,12 @@ describe User do
     it "should be an instance of avatar uploader" do
       user = FactoryGirl.create(:user)
       user.avatar.instance_of?(AvatarUploader).should be_true
+    end
+  end
+  
+  describe "scopes" do
+    it "should find all users that answerd" do
+      pending
     end
   end
 end

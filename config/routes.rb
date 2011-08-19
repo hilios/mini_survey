@@ -1,4 +1,12 @@
 MiniSurvey::Application.routes.draw do
+  resources :question_options
+
+  resources :answers
+
+  resources :questions
+
+  resources :surveys
+
   resources :users
 
   resources :sessions, 

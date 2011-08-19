@@ -36,6 +36,7 @@ module MiniSurvey
     config.generators do |generate|
       generate.helper               false
       generate.stylesheets          false
+      generate.javascripts          false
       generate.test_framework       :rspec
       generate.template_engine      :haml
       generate.fixture_replacement  nil

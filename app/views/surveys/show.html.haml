@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @survey.user_id
+%p
+  %b Title:
+  = @survey.title
+%p
+  %b Private:
+  = @survey.private
+
+= link_to 'Edit', edit_survey_path(@survey)
+\|
+= link_to 'Back', surveys_path

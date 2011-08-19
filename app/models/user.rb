@@ -1,12 +1,21 @@
 class User < ActiveRecord::Base
   has_secure_password
   
+  has_many :surveys
+  
   attr_protected :last_login
+  
   mount_uploader :avatar, AvatarUploader
+  
+  # scope :that_answered_survey, lambda do |survey_id| 
+  #   select("DISTINCT(id)")
+  #   .joins(:answers)
+  #   .where('answers.survey_id = ?', survey_id)
+  # end
   
   validates :password, 
     :length => { :minimum => 3 },
-    :unless => Proc.new { |m| m.password.blank? }
+    :unless => Proc.new { |user| user.password.blank? }
     
   validates :password,
     :presence => true,
