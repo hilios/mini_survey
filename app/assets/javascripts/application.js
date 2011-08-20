@@ -7,3 +7,4 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+// http://jashkenas.github.com/coffee-script/

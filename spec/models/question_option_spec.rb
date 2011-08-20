@@ -10,7 +10,7 @@ describe QuestionOption do
   end
   
   describe "validations" do
-    subject { FactoryGirl.create(:answer) }
+    subject { FactoryGirl.create(:question_option) }
     
     it { should validate_presence_of(:question) }
     it { should validate_presence_of(:title) }

@@ -9,6 +9,8 @@ describe User do
     it { should have_db_column(:avatar).of_type(:string) }
     it { should have_db_index(:email) }
     it { should have_many(:surveys) }
+    it { should have_many(:answers) }
+    it { should have_and_belong_to_many(:watches) }
   end
   
   describe "validations" do
@@ -82,8 +84,19 @@ describe User do
   end
   
   describe "scopes" do
-    it "should find all users that answerd" do
-      pending
+    it "should find all users that answerd an survey" do
+      FactoryGirl.create_list(:survey, 5)
+      total = 0
+      survey = FactoryGirl.create(:survey)
+      questions = FactoryGirl.create_list(:question, 5, :survey => survey)
+      questions.each do |question|
+        options = FactoryGirl.create_list(:question_option, 5, :question => question)
+        options.each_with_index do |option, i|
+          FactoryGirl.create_list(:answer, i, :question_option => option)
+          total += i
+        end
+      end
+      User.that_answered_survey(survey).count == total
     end
   end
 end

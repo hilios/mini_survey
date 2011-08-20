@@ -1,0 +1,9 @@
+= simple_form_for(@user_watches_survey) do |f|
+  = f.error_notification
+
+  .inputs
+    = f.input :user_id
+    = f.input :survey_id
+
+  .actions
+    = f.button :submit

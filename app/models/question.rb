@@ -6,7 +6,7 @@ class Question < ActiveRecord::Base
   alias_method  :options,   :question_options
   alias_method  :options=,  :question_options=
   
-  scope :from_survey, lambda { |survey| joins(:survey).where('questions.survey_id = ?', survey.is_a?(Integer) ? survey : survey.id) }
+  scope :from_survey, lambda { |survey| joins(:survey).where('questions.survey_id = ?', survey.is_a?(Survey) ? survey.id : survey) }
   scope :numbered,    order('number ASC')
   
   validates :survey,
@@ -19,4 +19,12 @@ class Question < ActiveRecord::Base
   
   validates :title,
     :presence => true
+  
+  def total
+    Question.
+      joins(:question_options => :answers).
+      where('question_options.question_id = questions.id').
+      where('question_options.id = answers.question_option_id').
+      count
+  end
 end

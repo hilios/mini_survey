@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @user_watches_survey.user_id
+%p
+  %b Survey:
+  = @user_watches_survey.survey_id
+
+= link_to 'Edit', edit_user_watches_survey_path(@user_watches_survey)
+\|
+= link_to 'Back', user_watches_surveys_path

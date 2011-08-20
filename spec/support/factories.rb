@@ -23,5 +23,6 @@ FactoryGirl.define do
   factory :answer do
     question_option
     user
+    survey
   end
 end

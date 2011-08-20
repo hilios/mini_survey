@@ -2,16 +2,15 @@ class User < ActiveRecord::Base
   has_secure_password
   
   has_many :surveys
+  has_many :answers
+  has_and_belongs_to_many :watches, 
+    :join_table => :user_watches_surveys
   
   attr_protected :last_login
   
   mount_uploader :avatar, AvatarUploader
   
-  # scope :that_answered_survey, lambda do |survey_id| 
-  #   select("DISTINCT(id)")
-  #   .joins(:answers)
-  #   .where('answers.survey_id = ?', survey_id)
-  # end
+  scope :that_answered_survey, lambda { |survey| select("DISTINCT(users.id)").joins(:answers).where('answers.survey_id = ?', survey.is_a?(Survey) ? survey.id : survey) }
   
   validates :password, 
     :length => { :minimum => 3 },

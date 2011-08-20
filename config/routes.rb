@@ -1,4 +1,6 @@
 MiniSurvey::Application.routes.draw do
+  resources :user_watches_surveys
+
   resources :question_options
 
   resources :answers

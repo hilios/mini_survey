@@ -7,7 +7,7 @@ describe Question do
     it { should have_db_column(:title).of_type(:text) }
     it { should have_db_index(:survey_id).unique(false) }
     it { should belong_to(:survey) }
-    it { should have_many(:answers) }
+    it { should have_many(:question_options) }
   end
   
   describe "validation" do
@@ -36,6 +36,20 @@ describe Question do
       Question.from_survey(survey.id).length.should be(5)
     end
     
+    describe "alias" do
+      it "should respond to option has question_option get/set method" do
+        question = FactoryGirl.create(:question)
+        FactoryGirl.create_list(:question_option, 5, :question => question)
+        question.should respond_to(:options)
+        question.should respond_to(:options=)
+        question.options.should have(5).question_option
+        question.options.each do |option|
+          option.class.should be(QuestionOption)
+          option.question.id.should be(question.id)
+        end
+      end
+    end
+    
     it "should return the questions ordered by number" do
       survey = FactoryGirl.create(:survey)
       FactoryGirl.create(:question, :number => 3, :survey => survey)
@@ -53,7 +67,14 @@ describe Question do
   
   describe "methods" do
     it "should return the total answers" do
-      pending
+      question  = FactoryGirl.create(:question)
+      options = FactoryGirl.create_list(:question_option, 5, :question => question)
+      total = 0
+      options.each_with_index do |option, i|
+        FactoryGirl.create_list(:answer, i, :question_option => option)
+        total += i
+      end
+      question.total.should == total
     end
   end
 end

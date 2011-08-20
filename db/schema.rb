@@ -10,17 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110819145529) do
+ActiveRecord::Schema.define(:version => 20110820150930) do
 
   create_table "answers", :force => true do |t|
     t.integer  "question_option_id"
     t.integer  "user_id"
+    t.integer  "survey_id"
     t.text     "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "answers", ["question_option_id"], :name => "index_answers_on_question_option_id"
+  add_index "answers", ["survey_id"], :name => "index_answers_on_survey_id"
   add_index "answers", ["user_id"], :name => "index_answers_on_user_id"
 
   create_table "question_options", :force => true do |t|
@@ -51,6 +53,14 @@ ActiveRecord::Schema.define(:version => 20110819145529) do
   end
 
   add_index "surveys", ["user_id"], :name => "index_surveys_on_user_id"
+
+  create_table "user_watches_surveys", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "survey_id"
+  end
+
+  add_index "user_watches_surveys", ["survey_id"], :name => "index_user_watches_surveys_on_survey_id"
+  add_index "user_watches_surveys", ["user_id"], :name => "index_user_watches_surveys_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
