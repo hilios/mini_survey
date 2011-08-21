@@ -1,0 +1,15 @@
+!!!
+%html{:lang => 'pt'}
+  %head
+    %meta{:charset => 'utf-8'}
+    - title = "%s" 
+    - title = yield :title if content_for? :title
+    %title= title % "Mini Survey" 
+    = favicon_link_tag
+    = stylesheet_link_tag :defaults
+    = yield :stylesheets
+    = javascript_include_tag :defaults
+    = yield :javascripts
+    = csrf_meta_tag
+  %body
+    = yield

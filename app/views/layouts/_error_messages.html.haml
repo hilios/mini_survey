@@ -1,0 +1,6 @@
+- if record.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(record.errors.count, "erro")} impediram este registro de ser salvo:"
+    %ul
+      - record.errors.full_messages.each do |msg|
+        %li= msg

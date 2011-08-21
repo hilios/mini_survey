@@ -13,6 +13,7 @@ gem 'carrierwave'
 gem 'jquery-rails'
 gem 'simple_form'
 gem 'mini_magick'
+gem 'responders'
 
 group :development, :test do
   gem 'capybara'
