@@ -2,7 +2,7 @@ class Question < ActiveRecord::Base
   
   belongs_to    :survey
   has_many      :choices
-  has_many      :anwers
+  has_many      :answers
   
   accepts_nested_attributes_for :choices, 
     :allow_destroy => true
@@ -22,6 +22,6 @@ class Question < ActiveRecord::Base
     :presence => true
   
   def total
-    Question.answers.count
+    self.answers.count
   end
 end
