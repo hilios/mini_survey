@@ -1,6 +1,7 @@
 class SurveysController < ApplicationController
   before_filter :authenticate
-  after_filter  :authorize, :only => [:edit, :update, :destroy]
+  before_filter :authorize, :only => [:edit, :update, :destroy]
+  helper_method :authorized?
   
   def index
     @surveys = Survey.not_private.all
@@ -44,6 +45,14 @@ class SurveysController < ApplicationController
   private
   
   def authorize
-    
+    unless authorized?
+      flash[:warning] = 'Você não tem permissão para acessar essa página'
+      redirect_to current_user
+    end
+  end
+  
+  def authorized?
+    @requested_survey ||= Survey.find(params[:id])
+    current_user.id == @requested_survey.user.id
   end
 end
