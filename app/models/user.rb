@@ -3,8 +3,14 @@ class User < ActiveRecord::Base
   
   has_many :surveys
   has_many :answers
-  has_and_belongs_to_many :watches, 
-    :join_table => :user_watches_surveys
+  has_many :watches
+  has_and_belongs_to_many :watched_surveys,
+    :join_table => :watches, :class_name => 'Survey',
+    :association_foreign_key => :survey_id, :foreign_key => :user_id
+  accepts_nested_attributes_for :answers,
+    :allow_destroy => true
+  accepts_nested_attributes_for :watches,
+    :allow_destroy => true
   
   attr_protected :last_login
   
@@ -19,6 +25,10 @@ class User < ActiveRecord::Base
   validates :password,
     :presence => true,
     :on => :create
+  
+  validates :password_confirmation,
+    :presence => true,
+    :unless => Proc.new { |user| user.password.blank? }
   
   validates :name,
     :presence => true

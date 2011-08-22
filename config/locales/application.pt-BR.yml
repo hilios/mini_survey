@@ -19,9 +19,22 @@
   activerecord:
     models:
       user: "usuário"
+      survey: "pesquisa"
+      question: "pergunta"
+      question_option: "opção de resposta"
+      answers: "respostas"
+      user_watches_survey: "favoritas"
     attributes:
       user:
-          name: "nome"
-          email: "email"
-          password: "senha"
-          password_confirmation: "confirme sua senha"
+        name: "Nome"
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirme sua senha"
+        avatar: "Imagem"
+      survey:
+        title: "Título"
+        is_private: "Privado"
+      question:
+        number: "Número"
+        title: "Título"
+        

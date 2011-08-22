@@ -13,7 +13,8 @@
 ActiveRecord::Schema.define(:version => 20110820150930) do
 
   create_table "answers", :force => true do |t|
-    t.integer  "question_option_id"
+    t.integer  "question_id"
+    t.integer  "choice_id"
     t.integer  "user_id"
     t.integer  "survey_id"
     t.text     "title"
@@ -21,18 +22,19 @@ ActiveRecord::Schema.define(:version => 20110820150930) do
     t.datetime "updated_at"
   end
 
-  add_index "answers", ["question_option_id"], :name => "index_answers_on_question_option_id"
+  add_index "answers", ["choice_id"], :name => "index_answers_on_choice_id"
+  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
   add_index "answers", ["survey_id"], :name => "index_answers_on_survey_id"
   add_index "answers", ["user_id"], :name => "index_answers_on_user_id"
 
-  create_table "question_options", :force => true do |t|
+  create_table "choices", :force => true do |t|
     t.integer  "question_id"
     t.text     "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "question_options", ["question_id"], :name => "index_question_options_on_question_id"
+  add_index "choices", ["question_id"], :name => "index_choices_on_question_id"
 
   create_table "questions", :force => true do |t|
     t.integer  "survey_id"
@@ -54,14 +56,6 @@ ActiveRecord::Schema.define(:version => 20110820150930) do
 
   add_index "surveys", ["user_id"], :name => "index_surveys_on_user_id"
 
-  create_table "user_watches_surveys", :id => false, :force => true do |t|
-    t.integer "user_id"
-    t.integer "survey_id"
-  end
-
-  add_index "user_watches_surveys", ["survey_id"], :name => "index_user_watches_surveys_on_survey_id"
-  add_index "user_watches_surveys", ["user_id"], :name => "index_user_watches_surveys_on_user_id"
-
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
@@ -73,5 +67,13 @@ ActiveRecord::Schema.define(:version => 20110820150930) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
+
+  create_table "watches", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "survey_id"
+  end
+
+  add_index "watches", ["survey_id"], :name => "index_watches_on_survey_id"
+  add_index "watches", ["user_id"], :name => "index_watches_on_user_id"
 
 end

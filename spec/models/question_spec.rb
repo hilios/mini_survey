@@ -7,7 +7,8 @@ describe Question do
     it { should have_db_column(:title).of_type(:text) }
     it { should have_db_index(:survey_id).unique(false) }
     it { should belong_to(:survey) }
-    it { should have_many(:question_options) }
+    it { should have_many(:choices) }
+    it { should have_many(:answers) }
   end
   
   describe "validation" do
@@ -35,46 +36,27 @@ describe Question do
       Question.from_survey(survey).length.should be(5)
       Question.from_survey(survey.id).length.should be(5)
     end
-    
-    describe "alias" do
-      it "should respond to option has question_option get/set method" do
-        question = FactoryGirl.create(:question)
-        FactoryGirl.create_list(:question_option, 5, :question => question)
-        question.should respond_to(:options)
-        question.should respond_to(:options=)
-        question.options.should have(5).question_option
-        question.options.each do |option|
-          option.class.should be(QuestionOption)
-          option.question.id.should be(question.id)
-        end
-      end
-    end
-    
-    it "should return the questions ordered by number" do
-      survey = FactoryGirl.create(:survey)
-      FactoryGirl.create(:question, :number => 3, :survey => survey)
-      FactoryGirl.create(:question, :number => 2, :survey => survey)
-      FactoryGirl.create(:question, :number => 5, :survey => survey)
-      FactoryGirl.create(:question, :number => 1, :survey => survey)
-      FactoryGirl.create(:question, :number => 4, :survey => survey)
-      i = 1
-      Question.from_survey(survey).numbered.each do |question|
-        question.number.should be(i)
-        i += 1
-      end
-    end
   end
   
   describe "methods" do
     it "should return the total answers" do
       question  = FactoryGirl.create(:question)
-      options = FactoryGirl.create_list(:question_option, 5, :question => question)
+      choices = FactoryGirl.create_list(:choice, 5, :question => question)
       total = 0
-      options.each_with_index do |option, i|
-        FactoryGirl.create_list(:answer, i, :question_option => option)
+      choices.each_with_index do |choice, i|
+        FactoryGirl.create_list(:answer, i, :choice => choice)
         total += i
       end
       question.total.should == total
+    end
+  end
+  
+  describe "nested attributes" do
+    it "should nest questions" do
+      question  = FactoryGirl.create(:question)
+      question.choices_attributes = [{:title => 'foo'}, {:title => 'bar'}]
+      question.save!
+      question.choices.count.should be(2)
     end
   end
 end

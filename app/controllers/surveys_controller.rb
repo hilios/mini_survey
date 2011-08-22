@@ -1,6 +1,9 @@
 class SurveysController < ApplicationController
+  before_filter :authenticate
+  after_filter  :authorize, :only => [:edit, :update, :destroy]
+  
   def index
-    @surveys = Survey.all
+    @surveys = Survey.not_private.all
     respond_with @surveys
   end
 
@@ -21,6 +24,7 @@ class SurveysController < ApplicationController
 
   def create
     @survey = Survey.new(params[:survey])
+    @survey.user = current_user
     @survey.save
     respond_with @survey
   end
@@ -34,5 +38,11 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     @survey.destroy
     respond_with @survey
+  end
+  
+  private
+  
+  def authorize
+    
   end
 end

@@ -8,7 +8,7 @@ describe Survey do
     it { should have_db_index(:user_id).unique(false) }
     it { should belong_to(:user) }
     it { should have_many(:questions) }
-    it { should have_and_belong_to_many(:watchers) }
+    it { should have_and_belong_to_many(:watches) }
   end
   
   describe "validations" do
@@ -35,13 +35,31 @@ describe Survey do
     it "should count the unique users that answered a survey" do
       survey = FactoryGirl.create(:survey)
       question  = FactoryGirl.create(:question, :survey => survey)
-      options = FactoryGirl.create_list(:question_option, 5, :question => question)
+      choices = FactoryGirl.create_list(:choice, 5, :question => question)
       total = 0
-      options.each_with_index do |option, i|
-        FactoryGirl.create_list(:answer, i, :question_option => option)
+      choices.each_with_index do |choice, i|
+        FactoryGirl.create_list(:answer, i, :choice => choice)
         total += i
       end
       survey.total.should == total
+    end
+  end
+  
+  describe "scope" do
+    it "should find all survey that are no privated" do
+      FactoryGirl.create_list(:private_survey, 5)
+      FactoryGirl.create_list(:survey, 5)
+      Survey.count.should be(10)
+      Survey.not_private.count.should be(5)
+    end
+  end
+  
+  describe "nested attributes" do
+    it "should accept many questions" do
+      survey = FactoryGirl.create(:survey)
+      survey.questions_attributes = [{:title => 'foo', :number => 1}, {:title => 'bar', :number => 2}]
+      survey.save!
+      survey.questions.count.should be(2)
     end
   end
 end

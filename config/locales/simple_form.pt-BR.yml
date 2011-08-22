@@ -1,0 +1,21 @@
+"pt-BR":
+  simple_form:
+    "yes": 'Sim'
+    "no": 'Não'
+    required:
+      text: 'Obrigatório'
+      mark: '*'
+    error_notification:
+      default_message: "Foram encontrados erros no formulário, por favor corrija-os:"
+    # Labels and hints examples
+    # labels:
+    #   password: 'Password'
+    #   user:
+    #     new:
+    #       email: 'E-mail para efetuar o sign in.'
+    #     edit:
+    #       email: 'E-mail.'
+    # hints:
+    #   username: 'User name to sign in.'
+    #   password: 'No special characters, please.'
+

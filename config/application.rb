@@ -31,7 +31,7 @@ module MiniSurvey
     config.i18n.default_locale = 'pt-BR'
     
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
     
     config.generators do |generate|
       generate.helper               false

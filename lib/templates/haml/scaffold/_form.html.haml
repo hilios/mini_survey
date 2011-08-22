@@ -3,7 +3,7 @@
 
   .inputs
   <%- attributes.each do |attribute| -%>
-    = f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>
+    %p= f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>
   <%- end -%>
 
   .actions

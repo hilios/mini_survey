@@ -1,11 +1,14 @@
-= simple_form_for(@user) do |f|
+= simple_form_for @user, :html => {:multipart => true} do |f|
   = f.error_notification
-
   .inputs
-    = f.input :name
-    = f.input :email
-    = f.input :password_digest
-    = f.input :last_login
+    = f.input :name,  :input_html => {:class => :large}
+    = f.input :email, :input_html => {:class => :large}
+    = f.input :password,              :required => @user.new_record?
+    = f.input :password_confirmation, :required => @user.new_record?
+    .user
+      = image_tag @user.avatar_url, :alt => @user.name, :class => 'avatar'
+      = f.input :avatar, :as => :file
+      = f.input :avatar_cache, :as => :hidden
 
   .actions
     = f.button :submit

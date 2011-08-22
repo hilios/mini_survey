@@ -1,2 +1,6 @@
-%h1 Sessions#new
-%p Find me in app/views/sessions/new.html.haml
+%h1 Bem-vindo, por favor identifique-se
+= flash_messages
+= render 'form'
+%p
+  É novo por aqui?
+  = link_to 'Registre-se.', new_user_url

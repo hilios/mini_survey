@@ -1,6 +1,9 @@
-class QuestionOption < ActiveRecord::Base
+class Choice < ActiveRecord::Base
   belongs_to  :question
   has_many    :answers
+  
+  accepts_nested_attributes_for :answers, 
+    :allow_destroy => true
   
   validates   :question,
     :presence => true,

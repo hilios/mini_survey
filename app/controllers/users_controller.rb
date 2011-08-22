@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
+  before_filter :authenticate,  :except => [:new, :create]
+  after_filter  :authorize,     :only => [:edit, :update, :destroy]
+  
   def index
-    @users = User.all
-    respond_with @users
+    redirect_to current_user
   end
 
   def show
@@ -35,5 +37,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     respond_with @user
+  end
+  
+  private
+  
+  def authorize
+    deny_access unless current_user.id == @user.id
   end
 end

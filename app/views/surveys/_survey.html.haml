@@ -1,0 +1,7 @@
+%tr
+  %td
+    - if current_user.watchs.include?(survey)
+      = image_tag "star.png"
+    - else
+      = image_tag "star_empty.png"          
+  %td= link_to survey.title, survey

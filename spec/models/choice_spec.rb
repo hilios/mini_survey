@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe QuestionOption do
+describe Choice do
   describe "database" do
     it { should have_db_column(:question_id).of_type(:integer) }
     it { should have_db_column(:title).of_type(:text) }
@@ -10,7 +10,7 @@ describe QuestionOption do
   end
   
   describe "validations" do
-    subject { FactoryGirl.create(:question_option) }
+    subject { FactoryGirl.create(:choice) }
     
     it { should validate_presence_of(:question) }
     it { should validate_presence_of(:title) }

@@ -1,0 +1,148 @@
+@import "mixins/css3"
+@import "mixins/general"
+body,html
+  width: 100%
+  height: 100%
+body
+  background-color: #e7e7e7
+  color: #333
+  font-size: 14px
+a
+  text-decoration: none
+  &:link, &:visited
+    border-bottom: 1px dotted #06c
+    color: #06c
+  &:hover, &:active, &:visited:hover
+    border-bottom: 1px solid #04c
+    color: #04c
+  &.navigation
+    float: right
+h6
+  @include text-shadow(1px, 1px, 0, #fff)
+  font-size: 60px
+  font-weight: bold
+  margin-bottom: 20px
+  text-transform: uppercase
+  sup
+    font-size: 16px
+h1
+  border-bottom: 1px solid #ccc
+  color: #85B839
+  font:
+    size: 16px
+    weight: bold
+  margin-bottom: 20px
+  padding-bottom: 20px
+h2
+  @extend h1
+  font-size: 14px
+  padding: 10px 0
+p
+  margin: 10px 0
+a.button
+  @include border-radius(3px)
+  background-color: #85B839
+  font-weight: bold
+  padding: 10px
+  line-height: 1.5em
+  &:link, &:visited
+    @include linear-gradient(#a0de45, #85B839)
+    border: 1px solid #6d972f
+    color: #fff
+  &:hover, &:visited:hover
+    @include linear-gradient(#b8ff4f, #85B839)
+    border: 1px solid #6d972f
+    color: #fff
+  &:active
+    @include linear-gradient(#85B839, #b8ff4f)
+div#master
+  margin: 0 auto
+  padding: 20px
+  width: 800px
+div#content
+  @include box-shadow(0, 1px, 2px, #999)
+  background-color: #fff
+  border-top: 5px solid #ccc
+  padding: 20px
+  overflow: hidden
+ul#navigation
+  overflow: hidden
+  li
+    float: left
+    font-weight: bold
+    margin-right: 1px
+    list-style: none
+    a
+      border-style: none
+      color: #fff
+      display: block
+      padding: 8px 10px
+      text-decoration: none
+      &:link, &:visited
+        background-color: #333
+        @include linear-gradient(#111, #333)
+      &:hover, &:active, &:visited:hover
+        background-color: #85B839
+        @include linear-gradient(#333, #666)
+    &.selected
+      a
+        background-color: #ccc !important
+        @include linear-gradient(#bbb, #ccc)
+        color: #000 !important
+    &.exit
+      float: right
+      font-weight: normal      
+      a
+        background:
+          color: transparent
+          image: none
+        padding: 8px 0
+        text-decoration: underline
+        &:link, &:visited
+          color: #06c
+        &:hover, &:active, &:visited:hover
+          color: #04c
+/* Users */
+div.user
+  overflow: hidden
+  h3
+    font:
+      size: 20px
+      weight: bold
+  img.avatar
+    float: left
+    margin-right: 10px
+    height: 140px
+    width: 140px
+  img.small_avatar
+    @extend img.avatar
+    height: 50px
+    width:  50px
+/* Surveys */
+form.search
+  float: right
+  overflow: hidden
+  text-align: right
+  width: 300px
+  abbr
+    display: none
+  label
+    display: none
+  input
+    display: inline
+    margin-left: 10px
+    padding: 0
+  p
+    margin: 0
+    display: inline
+table.surveys
+  width: 100%
+  td
+    border:
+      style: none
+      bottom: 1px solid #ccc
+    padding: 10px 0
+    &.empty
+      border-style: none
+      text-align: center
+

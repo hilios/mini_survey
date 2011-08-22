@@ -2,9 +2,8 @@
   = f.error_notification
 
   .inputs
-    = f.input :user_id
-    = f.input :title
-    = f.input :private
+    = f.input :title, :input_html => {:class => :very_large}
+    = f.input :is_private
 
   .actions
     = f.button :submit

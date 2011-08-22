@@ -3,6 +3,10 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'database_cleaner'
+
+# Set the capybara js driver
+# Capybara.javascript_driver = :webkit
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -19,6 +23,11 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   
   config.include CarrierWave::Test::Matchers
+  
+  config.before(:suite) do
+    # Ensure that the test db is clean
+    DatabaseCleaner.clean_with :truncation
+  end
   
   config.after(:suite) do
     user = FactoryGirl.build(:user)

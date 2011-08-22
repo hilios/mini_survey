@@ -1,18 +1,17 @@
-%p#notice= notice
-
-%p
-  %b Name:
-  = @user.name
-%p
-  %b Email:
-  = @user.email
-%p
-  %b Password digest:
-  = @user.password_digest
-%p
-  %b Last login:
-  = @user.last_login
-
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Back', users_path
+- content_for(:title) { "Minha conta - %s" }
+= flash_messages
+.user
+  = image_tag @user.avatar_url, :alt => @user.name, :class => 'avatar'
+  %h3= @user.name
+  %p
+    %em= @user.email
+    \–
+    = link_to 'Editar perfil', edit_user_url(@user)
+    %br
+    %br
+    %br
+    = link_to 'Incluir nova pesquisa', new_survey_url, :class => 'button'
+%h2
+  Minhas pesquisas
+%h2
+  Pesquisas favoritas

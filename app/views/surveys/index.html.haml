@@ -1,23 +1,15 @@
-%h1 Listing surveys
+- content_for(:title) { "Pesquisas - %s" }
 
-%table
-  %tr
-    %th User
-    %th Title
-    %th Private
-    %th
-    %th
-    %th
+%form{:url => surveys_url, :method => :get, :class => :search}
+  %input{:type => :text, :name => :q, :value => params[:q]}
+  %input{:type => :submit, :value => 'Procurar'}
 
-  - @surveys.each do |survey|
+%h1 Pesquisas
+
+%table.surveys
+  = render @surveys
+  - if @surveys.empty?
     %tr
-      %td= survey.user_id
-      %td= survey.title
-      %td= survey.private
-      %td= link_to 'Show', survey
-      %td= link_to 'Edit', edit_survey_path(survey)
-      %td= link_to 'Destroy', survey, :confirm => 'Are you sure?', :method => :delete
-
+      %td.empty
+        Nenhuma pesquisa disponível.
 %br
-
-= link_to 'New Survey', new_survey_path

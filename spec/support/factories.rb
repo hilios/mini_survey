@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:name) { |n| "foo#{n}" }
-    email           { "#{name}@host.com" }
-    password        { "qwerty" }
+    sequence(:name)       { |n| "foo#{n}" }
+    email                 { "#{name}@host.com" }
+    password              { "qwerty" }
+    password_confirmation { "qwerty" }
   end
   factory :survey do
     user
@@ -16,12 +17,12 @@ FactoryGirl.define do
     survey
     title   { "foo" }
   end
-  factory :question_option do
+  factory :choice do
     question
     title   { "bar" }
   end
   factory :answer do
-    question_option
+    choice
     user
     survey
   end
