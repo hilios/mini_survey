@@ -5,9 +5,6 @@
     = f.input :is_private
     = f.simple_fields_for :questions do |q|
       .question
-        %span.number
-          1.
-          = q.input :number,  :as => :hidden
         = q.input :title,   :as => :string
         = q.simple_fields_for :choices do |c|
           .choice

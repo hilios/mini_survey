@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Question do
   describe "database" do
     it { should have_db_column(:survey_id).of_type(:integer) }
-    it { should have_db_column(:number).of_type(:integer) }
     it { should have_db_column(:title).of_type(:text) }
     it { should have_db_index(:survey_id).unique(false) }
     it { should belong_to(:survey) }
@@ -16,9 +15,6 @@ describe Question do
     
     it { should be_valid }
     it { should validate_presence_of(:survey) }
-    it { should validate_numericality_of(:number) }
-    it { should_not allow_value(0).for(:number) }
-    it { should_not allow_value(0.5).for(:number) }
     it { should validate_presence_of(:title) }
     
     it "should not save a question without a valid survey" do
@@ -54,7 +50,7 @@ describe Question do
   describe "nested attributes" do
     it "should nest questions" do
       question  = FactoryGirl.create(:question)
-      question.choices_attributes = [{:title => 'foo'}, {:title => 'bar'}]
+      question.choices_attributes = [{:title => 'foo'}, {:title => 'bar'}, {:title => nil}]
       question.save!
       question.choices.count.should be(2)
     end

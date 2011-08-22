@@ -16,6 +16,9 @@ class SurveysController < ApplicationController
   def new
     @survey = Survey.new
     2.times { @survey.questions.build }
+    @survey.questions.all.each do |question|
+      2.times { question.choices.build }
+    end
     respond_with @survey
   end
 

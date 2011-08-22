@@ -2,11 +2,12 @@ MiniSurvey::Application.routes.draw do
   resources :surveys do
     resources :questions do
       resources :choices
-      resources :answers
     end
+    resources :answers
   end
 
-  resources :users, :except => [:index]
+  resources :users, 
+    :except => [:index]
 
   resources :sessions, 
     :only => [:new, :create]

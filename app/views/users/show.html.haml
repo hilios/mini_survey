@@ -25,8 +25,8 @@
 %h2
   Pesquisas favoritas
 %table{:class => 'surveys watched'}
-  = render @user.watched_surveys
-  - if @user.watched_surveys.empty?
+  = render @user.surveys_watched
+  - if @user.surveys_watched.empty?
     %tr
       %td.empty
         Você não marcou nenhuma pesquisa como favorita.

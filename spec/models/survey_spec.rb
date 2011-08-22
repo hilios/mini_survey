@@ -57,7 +57,7 @@ describe Survey do
   describe "nested attributes" do
     it "should accept many questions" do
       survey = FactoryGirl.create(:survey)
-      survey.questions_attributes = [{:title => 'foo', :number => 1}, {:title => 'bar', :number => 2}]
+      survey.questions_attributes = [{:title => 'foo'}, {:title => 'bar'}, {:title => nil}]
       survey.save!
       survey.questions.count.should be(2)
     end

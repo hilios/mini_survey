@@ -2,10 +2,6 @@ class UsersController < ApplicationController
   before_filter :authenticate,  :except => [:new, :create]
   before_filter :authorize,     :only => [:edit, :update, :destroy]
   helper_method :authorized?
-  
-  def index
-    redirect_to current_user
-  end
 
   def show
     @user = User.find(params[:id])
@@ -33,7 +29,9 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.update_attributes(params[:user])
-    respond_with @user
+    respond_with @user do |format|
+      format.html { redirect_to @user }
+    end
   end
   
   def destroy

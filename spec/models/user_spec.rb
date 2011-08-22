@@ -11,7 +11,7 @@ describe User do
     it { should have_many(:surveys) }
     it { should have_many(:answers) }
     it { should have_many(:watches) }
-    it { should have_and_belong_to_many(:watched_surveys) }
+    it { should have_and_belong_to_many(:surveys_watched) }
   end
   
   describe "validations" do
@@ -112,22 +112,25 @@ describe User do
       user = FactoryGirl.create(:user)
       user.answers_attributes = [
         {:choice => FactoryGirl.create(:choice)},
-        {:choice => FactoryGirl.create(:choice)}
+        {:choice => FactoryGirl.create(:choice)},
+        {:choice => nil}
       ]
       user.save!
       user.answers.count.should be(2)
     end
+    
     it "should nest watched surveys and return them from habtm relation" do
       user = FactoryGirl.create(:user)
       user.watches_attributes = [
         {:survey => FactoryGirl.create(:survey)},
         {:survey => FactoryGirl.create(:survey)},
-        {:survey => FactoryGirl.create(:survey)}
+        {:survey => FactoryGirl.create(:survey)},
+        {:survey => nil}
       ]
       user.save!
       user.watches.count.should be(3)
-      user.watched_surveys.count.should be(3)
-      user.watched_surveys.first.is_a?(Survey).should be_true
+      user.surveys_watched.count.should be(3)
+      user.surveys_watched.first.is_a?(Survey).should be_true
     end
   end
 end

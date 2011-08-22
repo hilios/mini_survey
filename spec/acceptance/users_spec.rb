@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-feature "Users", %q{
-
-} do
+feature "Users", %q{} do
   background do
     @user = FactoryGirl.create(:user)
     FactoryGirl.create_list(:survey, 5, :user => @user)
@@ -18,7 +16,7 @@ feature "Users", %q{
   end
   
   def submit_button
-    find(:xpath, "//form[@id='new_user']//input[@type='submit']")
+    find(:xpath, "//form//input[@type='submit']")
   end
   
   scenario "can register themselves and on complete redirect his profile page" do
@@ -59,7 +57,7 @@ feature "Users", %q{
       page.should have_content(survey.title)
       page.should have_xpath("//a[@href='#{survey_path(survey)}']")
     end
-    @user.watched_surveys.each do |survey|
+    @user.surveys_watched.each do |survey|
       page.should have_content(survey.title)
       page.should have_xpath("//a[@href='#{survey_path(survey)}']")
     end
@@ -77,5 +75,16 @@ feature "Users", %q{
     current_path.should == user_path(other_user)
     page.should have_css('p.flash')
     page.should have_css('p.warning')
+  end
+  
+  scenario "authenticated user could update their profiles" do
+    sign_in
+    visit edit_user_path(@user)
+    page.should have_xpath("//form[@action='#{user_path(@user)}']")
+    fill_in 'user[name]',   :with => 'Foo Bar'
+    submit_button.click
+    current_path.should == user_path(@user)
+      page.should have_css('p.flash')
+      page.should have_css('p.notice')
   end
 end
