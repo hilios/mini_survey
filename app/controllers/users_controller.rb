@@ -24,7 +24,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @user.save
-    respond_with @user
+    respond_with @user do |format|
+      format.html { sign_in(params[:user]); redirect_to root_url } if @user.valid?
+    end
   end
 
   def update

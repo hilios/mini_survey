@@ -1,9 +1,12 @@
 = simple_form_for(@survey) do |f|
   = f.error_notification
-
   .inputs
     = f.input :title, :input_html => {:class => :very_large}
     = f.input :is_private
-
+    = f.simple_fields_for :questions do |q|
+      = q.input :number,  :as => :hidden
+      = q.input :title,   :as => :string
+      = q.simple_fields_for :choices do |c|
+        = q.input :title, :as => :input
   .actions
     = f.button :submit

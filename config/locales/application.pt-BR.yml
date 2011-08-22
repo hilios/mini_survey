@@ -21,9 +21,9 @@
       user: "usuário"
       survey: "pesquisa"
       question: "pergunta"
-      question_option: "opção de resposta"
-      answers: "respostas"
-      user_watches_survey: "favoritas"
+      choice: "opção de resposta"
+      answer: "respostas"
+      watch: "favoritas"
     attributes:
       user:
         name: "Nome"
@@ -33,8 +33,10 @@
         avatar: "Imagem"
       survey:
         title: "Título"
-        is_private: "Privado"
+        is_private: "Pesquisa privada?"
       question:
         number: "Número"
+        title: "Título"
+      choice:
         title: "Título"
         

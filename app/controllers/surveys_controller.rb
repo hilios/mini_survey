@@ -14,6 +14,9 @@ class SurveysController < ApplicationController
 
   def new
     @survey = Survey.new
+    @survey.questions.build
+    raise @survey.questions.first.choices.build.to_json
+    
     respond_with @survey
   end
 

@@ -7,19 +7,18 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by_email(params[:user][:email])
-    if @user && @user.authenticate(params[:user][:password])
-      session[:current_user_id] = @user.id
+    @user = User.new(:email => params[:user][:email])
+    if sign_in(params[:user])
       redirect_to user_url(@user)
     else
-      @user = User.new(:email => params[:user][:email])
+      flash.now[:error] = 'Email ou senha inválidos.'
       render :new
     end
   end
 
   def destroy
     session[:current_user_id] = nil
-    redirect_to root_url
+    redirect_to root_url, :notice => 'Você foi deslogado com sucesso.'
   end
 
 end
