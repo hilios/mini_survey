@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
   
   def sign_in(credentials)
     user = User.find_by_email(credentials[:email])
-    if user && @user.authenticate(credentials[:password])
-      session[:current_user_id] = @user.id
+    if user && user.authenticate(credentials[:password])
+      session[:current_user_id] = user.id
       return true
     end
     false
@@ -31,6 +31,6 @@ class ApplicationController < ActionController::Base
   end
   
   def deny_access
-    redirect_to root_url, :notice => "Você foi desconectado com successo"
+    redirect_to root_path, :notice => "Você foi desconectado com successo"
   end
 end

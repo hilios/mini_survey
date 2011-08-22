@@ -2,16 +2,32 @@
 = flash_messages
 .user
   = image_tag @user.avatar_url, :alt => @user.name, :class => 'avatar'
+  = link_to 'Excluir conta', @user, :confirm => 'Tem certeza?', :method => :delete, :class => :destroy  if authorized?
   %h3= @user.name
   %p
     %em= @user.email
-    \–
-    = link_to 'Editar perfil', edit_user_url(@user)
+    %br
+    = link_to 'Editar perfil', edit_user_path(@user) if authorized?
     %br
     %br
     %br
-    = link_to 'Incluir nova pesquisa', new_survey_url, :class => 'button'
+    = link_to 'Incluir nova pesquisa', new_survey_path, :class => 'button' if authorized?
 %h2
   Minhas pesquisas
+%table.surveys
+  = render @user.surveys
+  - if @user.surveys.empty?
+    %tr
+      %td.empty
+        Você não criou nenhuma pesquisa.
+        = link_to 'Crie uma agora', new_survey_path if authorized?
+
 %h2
   Pesquisas favoritas
+%table{:class => 'surveys watched'}
+  = render @user.watched_surveys
+  - if @user.watched_surveys.empty?
+    %tr
+      %td.empty
+        Você não marcou nenhuma pesquisa como favorita.
+  

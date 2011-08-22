@@ -26,4 +26,8 @@ FactoryGirl.define do
     user
     survey
   end
+  factory :watch do
+    user
+    survey
+  end
 end

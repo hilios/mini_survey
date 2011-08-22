@@ -17,6 +17,7 @@ gem 'mini_magick'
 gem 'responders'
 
 group :development, :test do
+  gem 'launchy'
   gem 'capybara'
   # gem 'capybara-webkit'
   gem 'rspec-rails'

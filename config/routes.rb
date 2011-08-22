@@ -6,7 +6,7 @@ MiniSurvey::Application.routes.draw do
     end
   end
 
-  resources :users
+  resources :users, :except => [:index]
 
   resources :sessions, 
     :only => [:new, :create]

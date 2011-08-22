@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate,  :except => [:new, :create]
-  after_filter  :authorize,     :only => [:edit, :update, :destroy]
+  before_filter :authorize,     :only => [:edit, :update, :destroy]
+  helper_method :authorized?
   
   def index
     redirect_to current_user
@@ -25,7 +26,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.save
     respond_with @user do |format|
-      format.html { sign_in(params[:user]); redirect_to root_url } if @user.valid?
+      format.html { sign_in(params[:user]); redirect_to root_path, :notice => 'Seja bem-vindo, agora crie uma pesquisa!' } if @user.valid?
     end
   end
 
@@ -38,12 +39,22 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    respond_with @user
+    respond_with @user do |format|
+      format.html { redirect_to :controller => :sessions, :action => :destroy }
+    end
   end
   
   private
   
   def authorize
-    deny_access unless current_user.id == @user.id
+    unless authorized?
+      flash[:warning] = 'Você não tem permissão para acessar essa página'
+      redirect_to current_user
+    end
+  end
+  
+  def authorized?
+    @requested_user ||= User.find(params[:id])
+    current_user.id == @requested_user.id
   end
 end

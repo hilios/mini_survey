@@ -1,7 +1,7 @@
 %tr
   %td
-    - if current_user.watchs.include?(survey)
-      = image_tag "star.png"
+    - if current_user.watches.include?(survey)
+      = image_tag "star.png",       :alt => 'Favorita'
     - else
-      = image_tag "star_empty.png"          
+      = image_tag "star_empty.png", :alt => 'Favorita'       
   %td= link_to survey.title, survey

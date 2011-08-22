@@ -4,9 +4,13 @@
     = f.input :title, :input_html => {:class => :very_large}
     = f.input :is_private
     = f.simple_fields_for :questions do |q|
-      = q.input :number,  :as => :hidden
-      = q.input :title,   :as => :string
-      = q.simple_fields_for :choices do |c|
-        = q.input :title, :as => :input
+      .question
+        %span.number
+          1.
+          = q.input :number,  :as => :hidden
+        = q.input :title,   :as => :string
+        = q.simple_fields_for :choices do |c|
+          .choice
+            = q.input :title, :as => :input
   .actions
     = f.button :submit

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-feature "", %q{
+feature "Answers", %q{
 
 } do
-  background do
-    # FactoryGirl.create()
-  end
-  
-  scenario "GET /new" do
-    
-  end
+  # background do
+  #   FactoryGirl.create()
+  # end
+  # 
+  # scenario "GET /new" do
+  #   
+  # end
 end
