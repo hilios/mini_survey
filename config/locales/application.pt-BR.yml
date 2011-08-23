@@ -9,7 +9,7 @@
         notice: "{resource_name} foi apagado"
         alert: "{resource_name} não pode ser apagado"
   errors:
-    messages: &errors_messages
+    messages:
       not_a_email: "não é válido"
       carrierwave_processing_error: "não foi possivel processar a imagem"
       carrierwave_integrity_error: "não é uma imagem"

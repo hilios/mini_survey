@@ -32,6 +32,6 @@ class ApplicationController < ActionController::Base
   end
   
   def deny_access
-    redirect_to root_path, :notice => "Você foi desconectado com successo"
+    redirect_to root_path, :notice => "Por favor identifique-se"
   end
 end

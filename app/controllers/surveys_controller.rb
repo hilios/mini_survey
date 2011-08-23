@@ -8,6 +8,9 @@ class SurveysController < ApplicationController
   before_filter :authorize, 
     :only => [:edit, :update, :destroy]
     
+  before_filter :protect_surveys,
+    :only => [:show]
+    
   helper_method :authorized?
   
   respond_to :js, 
@@ -74,21 +77,27 @@ class SurveysController < ApplicationController
   
   private
   
+  def deny_authorization
+    flash[:warning] = 'Você não tem permissão para acessar essa página'
+    redirect_to current_user
+  end
+  
   def authorize
-    unless authorized?
-      flash[:warning] = 'Você não tem permissão para acessar essa página'
-      redirect_to current_user
-    end
+    deny_authorization unless authorized?
   end
   
   def authorized?
     find_survey
-    current_user.id == @requested_survey.user.id or not @requested_survey.private?
+    current_user.id == find_survey.user.id
+  end
+  
+  def protect_surveys
+    deny_authorization if find_survey.private? and current_user.id != find_survey.user.id
   end
   
   def not_allow_duplicated_answers
     find_survey
-    redirect_to survey_answers_path(@requested_survey) if current_user.answered_survey?(@requested_survey)
+    redirect_to survey_answers_path(find_survey) if current_user.answered_survey?(find_survey)
   end
   
   def find_survey

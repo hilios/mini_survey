@@ -1,6 +1,10 @@
 require 'spec_helper'
 
-feature "Users", %q{} do
+feature "Users", %q{
+  In other to use the app an user can register themselves, and update their profile any time they want.
+  They can see others users profiles.
+  But they can't edit, update or delete other user profile.
+} do
   background do
     @user = FactoryGirl.create(:user)
     FactoryGirl.create_list(:survey, 5, :user => @user)
@@ -8,6 +12,7 @@ feature "Users", %q{} do
   end
   
   def sign_in(user = @user)
+    Capybara.reset_sessions!
     visit root_path
     fill_in 'user[email]',     :with => user.email
     fill_in 'user[password]',  :with => user.password
