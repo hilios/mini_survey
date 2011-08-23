@@ -1,3 +1,4 @@
+# encoding: utf-8
 class AnswersController < ApplicationController
   before_filter :find_survey
   before_filter :not_allow_duplicated_answers, :only => :create

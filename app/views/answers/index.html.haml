@@ -6,8 +6,6 @@
 .survey
   %h3
     = @survey.title
-  %em
-    = pluralize(@survey.total, 'resposta', 'respostas')
   = flash_messages
   %ol
     - @survey.questions.each do |question|

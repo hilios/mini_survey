@@ -1,1 +1,1 @@
-require 'email_format_validator'
+require 'email_validator'

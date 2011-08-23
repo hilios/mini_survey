@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SessionsController < ApplicationController
   respond_to :html
   

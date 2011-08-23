@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
     
   validates :email,
     :presence => true,
-    :email_format => true
+    :email => true
   
   validates :email,
     :uniqueness => { :case_sensitive => false },

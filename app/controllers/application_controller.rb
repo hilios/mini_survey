@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'application_responder'
 
 class ApplicationController < ActionController::Base

@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'md5'
+require 'digest/md5'
 
 class AvatarUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SurveysController < ApplicationController
   before_filter :authenticate
   

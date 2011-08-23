@@ -16,11 +16,12 @@
           app
       - if authenticated?
         %ul#navigation
-          %li{:class => controller_is?(:users) ? 'selected' : nil}
+          %li{:class => (controller_is?(:users) and params[:id].to_i == current_user.id ? 'selected' : nil)}
             = link_to "Minha conta", user_url(current_user)
           %li{:class => controller_is?(:surveys, :answers) ? 'selected' : nil}
             = link_to "Pesquisas", surveys_url
           %li{:class => 'exit'}
+            = "Olá #{current_user.name},"
             = link_to "Sair", destroy_session_url
       #content
         = yield

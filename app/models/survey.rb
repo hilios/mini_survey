@@ -27,9 +27,6 @@ class Survey < ActiveRecord::Base
   end
   
   def total
-    User.
-      select('DISTINCT(users.id)').
-      that_answered_survey(self).
-      count
+    User.includes("surveys").that_answered_survey(self).count
   end
 end
