@@ -107,7 +107,7 @@ describe User do
     end
   end
   
-  describe "nested attrbutes" do
+  describe "nested attributes" do
     it "should nest answers" do
       user = FactoryGirl.create(:user)
       user.answers_attributes = [
@@ -131,6 +131,51 @@ describe User do
       user.watches.count.should be(3)
       user.surveys_watched.count.should be(3)
       user.surveys_watched.first.is_a?(Survey).should be_true
+    end
+  end
+  
+  describe "methods" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      @survey = FactoryGirl.create(:survey)
+      FactoryGirl.create_list(:question, 5, :survey => @survey).each do |question|
+        FactoryGirl.create_list(:choice, 5, :question => question)
+      end
+    end
+    
+    def answer_randomly
+      @user.answers_attributes = @survey.questions.map do |question|
+        {:choice => question.choices[rand(question.choices.size)]}
+      end
+      @user.save
+    end
+    
+    describe "answered_survey?" do
+      it "should return true if some question is answered from a survey" do
+        answer_randomly
+        @user.answered_survey?(@survey).should be_true
+      end
+      
+      it "should return false if none question is answered from a survey" do
+        @user.answered_survey?(@survey).should be_false
+      end
+    end
+    
+    describe "answered_choice?" do
+      it "should return true if user answered a given choice" do
+        answer_randomly
+        @user.answers.each do |answer|
+          @user.answered_choice?(answer.choice).should be_true
+        end
+      end
+      
+      it "should return false if user not answerd given choice" do
+        @survey.questions.each do |question|
+          question.choices.each do |choice|
+            @user.answered_choice?(choice).should be_false
+          end
+        end
+      end
     end
   end
 end

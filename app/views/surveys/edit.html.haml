@@ -1,4 +1,5 @@
 - content_for(:title) { "Editar pesquisa - %s" }
 = link_to 'Voltar', current_user, :class => :back
 %h1 Editar pesquisa
+= flash_messages
 = render 'form'

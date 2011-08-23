@@ -1,13 +1,21 @@
 class AnswersController < ApplicationController
-  before_filter :find_survey, :authorize
+  before_filter :find_survey
+  before_filter :not_allow_duplicated_answers, :only => :create
+  before_filter :authorize, :only => :data
   helper_method :authorized?
   
   def index
   end
   
+  def data
+  end
+  
   def create
-    respond_with @user do |format|
-      
+    answers = []
+    params[:answers].each_value { |choice_id| answers << {:choice => Choice.find(choice_id)} }
+    current_user.update_attributes :answers_attributes => answers
+    respond_with @survey do |format|
+      format.html { redirect_to survey_answers_path(@survey) }
     end
   end
   
@@ -26,6 +34,10 @@ class AnswersController < ApplicationController
   
   def authorized?
     current_user.id == @survey.user.id
+  end
+  
+  def not_allow_duplicated_answers
+    redirect_to survey_answers_path(@survey) if current_user.answered_survey?(@survey)
   end
   
 end

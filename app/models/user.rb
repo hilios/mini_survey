@@ -55,4 +55,12 @@ class User < ActiveRecord::Base
     self.update_attribute :last_login, Time.now
     super(*args, &block)
   end
+  
+  def answered_survey?(survey)
+    self.answers.where('answers.survey_id = ?', survey.is_a?(Survey) ? survey.id : survey).count > 0
+  end
+  
+  def answered_choice?(choice)
+    self.answers.where('answers.choice_id = ?', choice.is_a?(Choice) ? choice.id : choice).count > 0
+  end
 end

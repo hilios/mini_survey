@@ -1,0 +1,5 @@
+- if authorized?
+  %ul.actions
+    %li= link_to 'Ver respostas', data_survey_answers_path(survey)
+    %li= link_to 'Editar', edit_survey_path(survey)
+    %li= link_to 'Excluir', survey, :confirm => 'Tem certeza?', :method => :delete

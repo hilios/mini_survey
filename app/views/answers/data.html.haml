@@ -2,7 +2,6 @@
 = link_to 'Voltar', @survey, :class => :back
 %h1 
   Respostas
-= render 'surveys/actions', :survey => @survey
 .survey
   %h3
     = @survey.title
@@ -16,5 +15,7 @@
         %ul
           - question.choices.each do |choice|
             %li
-              = radio_button_tag '', '', current_user.answered_choice?(choice), :disabled => true
+              - percentage = (choice.to_p * 100).round
+              .percentage{:"data-percentage" => percentage}
+                %span= "#{choice.total} / #{percentage}%"
               = choice.title

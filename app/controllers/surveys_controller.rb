@@ -1,5 +1,6 @@
 class SurveysController < ApplicationController
   before_filter :authenticate
+  before_filter :not_allow_duplicated_answers, :only => [:show]
   before_filter :authorize, :only => [:edit, :update, :destroy]
   helper_method :authorized?
   
@@ -28,17 +29,20 @@ class SurveysController < ApplicationController
   end
 
   def create
-    
     @survey = Survey.new(params[:survey])
     @survey.user = current_user
     @survey.save
-    respond_with @survey
+    respond_with @survey do |format|
+      format.html { redirect_to @survey }
+    end
   end
 
   def update
     @survey = Survey.find(params[:id])
     @survey.update_attributes(params[:survey])
-    respond_with @survey
+    respond_with @survey do |format|
+      format.html { redirect_to @survey }
+    end
   end
 
   def destroy
@@ -57,7 +61,16 @@ class SurveysController < ApplicationController
   end
   
   def authorized?
-    @requested_survey ||= Survey.find(params[:id])
+    find_survey
     current_user.id == @requested_survey.user.id or not @requested_survey.private?
+  end
+  
+  def not_allow_duplicated_answers
+    find_survey
+    redirect_to survey_answers_path(@requested_survey) if current_user.answered_survey?(@requested_survey)
+  end
+  
+  def find_survey
+    @requested_survey ||= Survey.find(params[:id])
   end
 end

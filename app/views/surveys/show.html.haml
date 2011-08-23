@@ -2,21 +2,17 @@
 = link_to 'Voltar', surveys_path, :class => :back
 %h1 
   Pesquisa
-- if authorized?
-  %ul.actions
-    %li= link_to 'Ver respostas', survey_answers_path(@survey)
-    %li= link_to 'Editar', edit_survey_path(@survey)
-    %li= link_to 'Excluir', @survey, :confirm => 'Tem certeza?', :method => :delete
+= render 'actions', :survey => @survey
 .survey
   %h3
     = @survey.title
   = flash_messages
-  %ol
-    - @survey.questions.each do |question|
-      %li
-        %strong= question.title
-        %ul
-          - question.choices.each do |choice|
-            %li
-              = radio_button_tag "question[#{question.id}]", choice.id
-              = choice.title
+  = simple_form_for :answers, :url => survey_answers_path(@survey) do |f|
+    %ol
+      - @survey.questions.each do |question|
+        %li
+          %strong= question.title
+          %ul
+            = f.collection_radio "question_#{question.id}", question.choices.map { |choice| [choice.id, choice.title] }, :first, :last
+    .actions
+      = f.button :submit, 'Enviar respostas'
