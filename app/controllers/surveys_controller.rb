@@ -17,7 +17,7 @@ class SurveysController < ApplicationController
     @survey = Survey.new
     2.times do
       question = @survey.questions.build 
-      2.times { question.choices.build }
+      3.times { question.choices.build }
     end
     respond_with @survey
   end

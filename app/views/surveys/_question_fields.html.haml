@@ -1,0 +1,7 @@
+.question
+  %strong Pergunta
+  %a{:href => '#', :'data-nested' => 'remove'} Remover
+  = f.input :title, :input_html => { :rows => 2}, :label => false
+  = f.simple_fields_for :choices do |builder|
+    = render 'choice_fields', :f => builder
+  = link_to_add_fields('Adicionar', f, :choices)

@@ -3,18 +3,20 @@
 //= require_tree .
 $(function() {
   $('p.flash').hide().slideDown();
-  
-  var question  = $('div.question:last').first().clone(),
-      choice    = $('div.choice:last').first().clone();
-  
+  // Add fields
   $('a[data-nested="add"]').live('click', function() {
       var $this = $(this),
-          $parent = $this.parent()
-          $inputs = $parent.find('div');
-      // $inputs..insertAfter($inputs);
+          $parent = $this.parent(),
+          $fields = $this.data('fields'),
+          $association;
+      $parent.find('a:last').before(function() {
+        var new_id = new Date().getTime(),
+            fields = $fields.toString().replace(/new_fields/g, new_id);
+        return fields;
+      });
       return false;
     });
-  // Remove an field
+  // Remove fields
   $('a[data-nested="remove"]').live('click', function() {
     var $this = $(this),
         $parent = $this.parent(),

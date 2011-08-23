@@ -3,17 +3,8 @@
   .inputs
     = f.input :title, :input_html => {:class => :very_large}
     = f.input :is_private
-    = f.simple_fields_for :questions do |q|
-      .question
-        %strong Pergunta
-        %a{:href => '#', :'data-nested' => 'remove'} Remover
-        = q.input :title, :input_html => { :rows => 2}, :label => false
-        = q.simple_fields_for :choices do |c|
-          .choice
-            = radio_button_tag '', '', false, :disabled => true
-            = c.input :title,     :as => :string,   :label => false
-            = link_to_remove_fields('Remover', c)
-        %a{:href => '#', :'data-nested' => 'add'} Adicionar
-    %a{:href => '#', :'data-nested' => 'add'} Adicionar
+    = f.simple_fields_for :questions do |builder|
+      = render 'question_fields', :f => builder
+    = link_to_add_fields('Adicionar', f, :questions)
   .actions
     = f.button :submit
