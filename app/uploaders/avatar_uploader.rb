@@ -32,7 +32,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   def filename
-    "#{model.id}.jpg" if original_filename
+    
+    "#{Digest::MD5.hexdigest(file.read)}.jpg" if original_filename
   end
 
 end

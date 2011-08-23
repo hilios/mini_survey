@@ -23,9 +23,9 @@ describe AvatarUploader do
       end
     end
     
-    it "should set the filename to the user id" do
+    it "should set the filename to the file md5 hash" do
       @uploader.store! mock_upload("horizontal.jpg")
-      @uploader.filename.should == "#{@user.id}.jpg"
+      @uploader.filename.should == "#{Digest::MD5.hexdigest(@uploader.read)}.jpg"
     end
   end
   

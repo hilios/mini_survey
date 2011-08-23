@@ -1,7 +1,14 @@
-%tr
-  %td
-    - if current_user.watches.include?(survey)
-      = image_tag "star.png",       :alt => 'Favorita'
-    - else
-      = image_tag "star_empty.png", :alt => 'Favorita'       
+%tr{:class => cycle('even', 'odd')}
+  %td{:width => "10"}
+    %a{:href => "#", :"data-watch" => survey.id, :class => 'watch'}
+      - if current_user.watches.include?(survey)
+        = image_tag "star.png",       :alt => 'Favorita'
+      - else
+        = image_tag "star_empty.png", :alt => 'Favorita'
   %td= link_to survey.title, survey
+  %td{:width => "40%", :align => 'right'}
+    %small
+      Criada em
+      = survey.created_at.strftime('%d/%m/%Y às %H:%M')
+      por
+      = link_to survey.user.name, survey.user

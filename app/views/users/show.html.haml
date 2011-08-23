@@ -1,13 +1,20 @@
-- content_for(:title) { "Minha conta - %s" }
+- content_for(:title) { (authorized? ? "Minha conta" : @user.name) + " - %s" }
 = flash_messages
 .user
   = image_tag @user.avatar_url, :alt => @user.name, :class => 'avatar'
-  = link_to 'Excluir conta', @user, :confirm => 'Tem certeza?', :method => :delete, :class => :destroy  if authorized?
+  - if authorized?
+    %ul.actions
+      %li= link_to 'Editar perfil', edit_user_path(@user)
+      %li= link_to 'Excluir conta', @user, :confirm => 'Tem certeza?', :method => :delete
   %h3= @user.name
   %p
-    %em= @user.email
+    %em
+      = @user.email
     %br
-    = link_to 'Editar perfil', edit_user_path(@user) if authorized?
+    - unless authorized?
+      %small
+        Último acesso em
+        = @user.last_login.strftime("%d/%m às %H:%M")
     %br
     %br
     %br
@@ -21,7 +28,6 @@
       %td.empty
         Você não criou nenhuma pesquisa.
         = link_to 'Crie uma agora', new_survey_path if authorized?
-
 %h2
   Pesquisas favoritas
 %table{:class => 'surveys watched'}

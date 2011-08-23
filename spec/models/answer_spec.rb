@@ -18,6 +18,7 @@ describe Answer do
   describe "validation" do
     subject { FactoryGirl.create(:answer) }
     
+    it { should be_valid }
     it { should validate_presence_of(:choice) }
     it { should validate_presence_of(:user) }
     it { should validate_uniqueness_of(:user_id).scoped_to(:choice_id) }

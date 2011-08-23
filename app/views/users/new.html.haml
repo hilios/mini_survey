@@ -1,3 +1,4 @@
-= link_to 'Voltar', root_path, :class => :navigation
+- content_for(:title) { "Registre-se - %s" }
+= link_to 'Voltar', root_path, :class => :back
 %h1 Registre-se
 = render 'form'

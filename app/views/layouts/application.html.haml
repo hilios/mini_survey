@@ -18,7 +18,7 @@
         %ul#navigation
           %li{:class => controller_is?(:users) ? 'selected' : nil}
             = link_to "Minha conta", user_url(current_user)
-          %li{:class => controller_is?(:surveys) ? 'selected' : nil}
+          %li{:class => controller_is?(:surveys, :answers) ? 'selected' : nil}
             = link_to "Pesquisas", surveys_url
           %li{:class => 'exit'}
             = link_to "Sair", destroy_session_url

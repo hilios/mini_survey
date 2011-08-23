@@ -3,15 +3,15 @@ class Choice < ActiveRecord::Base
   
   has_many    :answers
   
-  accepts_nested_attributes_for :answers, 
-    :allow_destroy => true,
-    :reject_if => lambda { |answer| answer[:user].nil? }
-  
-  validates   :question,
-    :presence => true,
-    :associated => true
-  
   validates   :title,
     :presence => true,
     :length => { :minimum => 3 }
+    
+  def total
+    self.answers.count
+  end
+  
+  def to_p
+    self.question.total > 0 ? self.total.to_f / self.question.total.to_f : 0.0
+  end
 end

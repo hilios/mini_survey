@@ -1,15 +1,22 @@
-%p#notice= notice
-
-%p
-  %b User:
-  = @survey.user_id
-%p
-  %b Title:
-  = @survey.title
-%p
-  %b Private:
-  = @survey.private
-
-= link_to 'Edit', edit_survey_path(@survey)
-\|
-= link_to 'Back', surveys_path
+- content_for(:title) { "Pesquisa: #{@survey.title} - %s" }
+= link_to 'Voltar', surveys_path, :class => :back
+%h1 
+  Pesquisa
+- if authorized?
+  %ul.actions
+    %li= link_to 'Ver respostas', survey_answers_path(@survey)
+    %li= link_to 'Editar', edit_survey_path(@survey)
+    %li= link_to 'Excluir', @survey, :confirm => 'Tem certeza?', :method => :delete
+.survey
+  %h3
+    = @survey.title
+  = flash_messages
+  %ol
+    - @survey.questions.each do |question|
+      %li
+        %strong= question.title
+        %ul
+          - question.choices.each do |choice|
+            %li
+              = radio_button_tag "question[#{question.id}]", choice.id
+              = choice.title

@@ -15,7 +15,7 @@ a
   &:hover, &:active, &:visited:hover
     border-bottom: 1px solid #04c
     color: #04c
-  &.navigation
+  &.back
     float: right
 h6
   @include text-shadow(1px, 1px, 0, #fff)
@@ -37,14 +37,22 @@ h2
   @extend h1
   font-size: 14px
   padding: 10px 0
+  margin-bottom: 10px
+h3
+  font:
+    size: 20px
+    weight: bold
 p
   margin: 10px 0
+small
+  color: #666
 a.button
   @include border-radius(3px)
   background-color: #85B839
   font-weight: bold
   padding: 10px
   line-height: 1.5em
+  margin-top: 30px
   &:link, &:visited
     @include linear-gradient(#a0de45, #85B839)
     border: 1px solid #6d972f
@@ -102,6 +110,13 @@ ul#navigation
           color: #06c
         &:hover, &:active, &:visited:hover
           color: #04c
+ul.actions
+  float: right
+  overflow: hidden
+  li
+    font-size: 12px
+    display: inline
+    margin-left: 10px
 /* Flash messages */
 p.flash
   @include border-radius(3px)
@@ -128,13 +143,6 @@ p.error
 /* Users */
 div.user
   overflow: hidden
-  a.destroy
-    font-size: 12px
-    float: right
-  h3
-    font:
-      size: 20px
-      weight: bold
   img.avatar
     float: left
     margin-right: 10px
@@ -166,11 +174,65 @@ table.surveys
   td
     border:
       style: none
-      bottom: 1px solid #ccc
-    padding: 10px 0
+    padding: 10px 5px
     &.empty
       border-style: none
       text-align: center
+  tr
+    &.odd
+      td
+        background-color: #efefef
+    &.even
+      td
+        background-color: #fff
+  a.watch
+    border-style: none
+form.survey
+  a
+    font-size: 11px
+div.survey
+  h3
+    margin-bottom: 20px
+  ol
+    li
+      font-weight: bold
+      list-style: 
+        position: inside
+        type: decimal-leading-zero
+      margin-left: 20px
+    ul
+      li
+        display: block
+        font-weight: normal
+        list-style-type: none
+        margin: 10px 0
+          left: 25px
+  strong
+    font-weight: bold
+  em
+    color: #999
+    display: block
+    font-size: 12px
+    margin-bottom: 10px
+  div.percentage
+    background-color: #eee
+    float: left
+    height: 18px
+    margin-right: 20px
+    position: relative
+    width: 150px
+    div
+      background-color: #85B839
+      width: 0%
+      position: absolute
+      top: 0
+      height: 100%
+    span
+      font-size: 11px
+      position: absolute
+      right: 2px
+      top: 3px
+      z-index: 10
 /* Question */
 div.question
   background-color: #eee
@@ -178,12 +240,32 @@ div.question
   margin: 10px 0
   padding: 10px 0
     left: 10px
-  span.number
-    color: #999
-    float: left
-    font-weight: bold
+  width: 700px
+  strong
+    font:
+      size: 12px
+      weight: bold
+    margin-right: 405px
   p
     margin: 0
+  textarea
+    width: 516px
+  a
+    margin-left: 20px
+/* Choices */
+div.choice
+  overflow: hidden
+  padding: 20px 0 0 5px
   input
-    width: 680px
-
+    width: auto
+  p
+    display: inline
+    input
+      padding: 2px
+      width: 500px
+    input[type=checkbox]
+      display: none
+  a
+    float: none
+    margin: 0
+    line-height: 100%

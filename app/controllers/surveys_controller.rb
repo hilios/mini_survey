@@ -15,8 +15,8 @@ class SurveysController < ApplicationController
 
   def new
     @survey = Survey.new
-    2.times { @survey.questions.build }
-    @survey.questions.all.each do |question|
+    2.times do
+      question = @survey.questions.build 
       2.times { question.choices.build }
     end
     respond_with @survey
@@ -28,9 +28,10 @@ class SurveysController < ApplicationController
   end
 
   def create
+    
     @survey = Survey.new(params[:survey])
     @survey.user = current_user
-    @survey.save
+    @survey.save!
     respond_with @survey
   end
 
@@ -56,6 +57,6 @@ class SurveysController < ApplicationController
   
   def authorized?
     @requested_survey ||= Survey.find(params[:id])
-    current_user.id == @requested_survey.user.id
+    current_user.id == @requested_survey.user.id or not @requested_survey.private?
   end
 end

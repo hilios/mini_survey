@@ -1,9 +1,9 @@
 MiniSurvey::Application.routes.draw do
   resources :surveys do
-    resources :questions do
-      resources :choices
+    resources :questions
+    resources :answers, :only => [:index] do
+      post :create
     end
-    resources :answers
   end
 
   resources :users, 

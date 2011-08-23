@@ -12,8 +12,38 @@ describe Choice do
   describe "validations" do
     subject { FactoryGirl.create(:choice) }
     
-    it { should validate_presence_of(:question) }
+    it { should be_valid }
     it { should validate_presence_of(:title) }
     it { should ensure_length_of(:title).is_at_least(3) }
+  end
+  
+  describe "methods" do
+    it "should return the total answers" do
+      choice = FactoryGirl.create(:choice)
+      answers = FactoryGirl.create_list(:answer, 10, :choice => choice)
+      choice.total.should == 10
+    end
+    
+    describe "to_p" do
+      it "should return the percentage of the choice" do
+        question = FactoryGirl.create(:question)
+        choices = FactoryGirl.create_list(:choice, 5, :question => question)
+        total = 0.0
+        choices.each_with_index do |choice, i|
+          FactoryGirl.create_list(:answer, i, :choice => choice)
+          total += i
+        end
+        choices.each_with_index do |choice, i|
+          choice.to_p.should == (i / total)
+        end
+      end
+
+      it "should never divide by zero" do
+        question = FactoryGirl.create(:question)
+        choices = FactoryGirl.create_list(:choice, 5, :question => question)
+        question.total.should == 0
+        choices.first.to_p.should == 0.0
+      end
+    end
   end
 end

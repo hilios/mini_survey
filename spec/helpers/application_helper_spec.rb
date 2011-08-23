@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe ApplicationHelper do
+  describe "link_to_remove_fields" do
+    it "should render an input and a link with data-nested='remove'" do
+      # SimpleForm.new
+      # simple_form_for :user do |form|
+      #   link = link_to_remove('Remove', form)
+      #   link.should match(/_destroy/)
+      # end
+    end
+  end
+  
   describe "respond to [:notice, :info, :warning, :error]" do
     [:notice, :info, :warning, :error].each do |key|
       it "should return a formatted p when :#{key.to_s} flash message is present" do

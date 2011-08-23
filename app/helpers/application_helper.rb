@@ -1,4 +1,10 @@
 module ApplicationHelper
+  def link_to_remove_fields(name, f)
+    f.input(:_destroy, :as => :boolean, :label => false) + link_to(name, '#', :"data-nested" => 'remove')
+  end
+  def link_to_add_fields(name, f, association)
+    
+  end
   # from: http://simplesideias.com.br/exibindo-mensagens-no-rails/
   def flash_messages
     messages = ""

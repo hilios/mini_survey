@@ -14,7 +14,6 @@ describe Question do
     subject { FactoryGirl.create(:question) }
     
     it { should be_valid }
-    it { should validate_presence_of(:survey) }
     it { should validate_presence_of(:title) }
     
     it "should not save a question without a valid survey" do

@@ -5,9 +5,15 @@
     = f.input :is_private
     = f.simple_fields_for :questions do |q|
       .question
-        = q.input :title,   :as => :string
+        %strong Pergunta
+        %a{:href => '#', :'data-nested' => 'remove'} Remover
+        = q.input :title, :input_html => { :rows => 2}, :label => false
         = q.simple_fields_for :choices do |c|
           .choice
-            = q.input :title, :as => :input
+            = radio_button_tag '', '', false, :disabled => true
+            = c.input :title,     :as => :string,   :label => false
+            = link_to_remove_fields('Remover', c)
+        %a{:href => '#', :'data-nested' => 'add'} Adicionar
+    %a{:href => '#', :'data-nested' => 'add'} Adicionar
   .actions
     = f.button :submit

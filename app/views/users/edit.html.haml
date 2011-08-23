@@ -1,3 +1,4 @@
-= link_to 'Voltar', current_user, :class => :navigation
+- content_for(:title) { "Editar perfil - %s" }
+= link_to 'Voltar', current_user, :class => :back
 %h1 Editar perfil
 = render 'form'

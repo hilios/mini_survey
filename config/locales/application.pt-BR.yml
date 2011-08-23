@@ -31,12 +31,14 @@
         password: "Senha"
         password_confirmation: "Confirme sua senha"
         avatar: "Imagem"
+        questions: "Perguntas"
       survey:
         title: "Título"
         is_private: "Pesquisa privada?"
       question:
-        number: "Número"
+        survey: "Pesquisa"
         title: "Título"
       choice:
+        question: "Pergunta"
         title: "Título"
         

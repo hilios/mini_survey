@@ -1,39 +1,31 @@
 class AnswersController < ApplicationController
+  before_filter :find_survey, :authorize
+  helper_method :authorized?
+  
   def index
-    @answers = Answer.all
-    respond_with @answers
   end
-
-  def show
-    @answer = Answer.find(params[:id])
-    respond_with @answer
-  end
-
-  def new
-    @answer = Answer.new
-    respond_with @answer
-  end
-
-  def edit
-    @answer = Answer.find(params[:id])
-    respond_with @answer
-  end
-
+  
   def create
-    @answer = Answer.new(params[:answer])
-    @answer.save
-    respond_with @answer
+    respond_with @user do |format|
+      
+    end
   end
-
-  def update
-    @answer = Answer.find(params[:id])
-    @answer.update_attributes(params[:answer])
-    respond_with @answer
+  
+  private
+  
+  def find_survey
+    @survey = Survey.find(params[:survey_id])
   end
-
-  def destroy
-    @answer = Answer.find(params[:id])
-    @answer.destroy
-    respond_with @answer
+  
+  def authorize
+    unless authorized?
+      flash[:warning] = 'Você não tem permissão para acessar essa página'
+      redirect_to current_user
+    end
   end
+  
+  def authorized?
+    current_user.id == @survey.user.id
+  end
+  
 end
