@@ -1,10 +1,10 @@
-%tr{:class => cycle('even', 'odd')}
+%tr{:class => cycle('even', 'odd') + " survey_#{survey.id}"}
   %td{:width => "10"}
-    %a{:href => "#", :"data-watch" => survey.id, :class => 'watch'}
-      - if current_user.watches.include?(survey)
-        = image_tag "star.png",       :alt => 'Favorita'
-      - else
-        = image_tag "star_empty.png", :alt => 'Favorita'
+    - if current_user.watches?(survey)
+      - star = image_tag "star.png",       :alt => 'Favorita'
+    - else
+      - star = image_tag "star_empty.png", :alt => 'Favorita'
+    = link_to star, watch_survey_path(survey), :class => :watch, :remote => true
   %td= link_to survey.title, survey
   %td{:width => "40%", :align => 'right'}
     %small

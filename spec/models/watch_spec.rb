@@ -9,4 +9,10 @@ describe Watch do
     it { should belong_to(:user) }
     it { should belong_to(:survey) }
   end
+  
+  describe "validation" do
+    subject { FactoryGirl.create(:watch) }
+    
+    it { should validate_uniqueness_of(:user_id).scoped_to(:survey_id) }
+  end
 end

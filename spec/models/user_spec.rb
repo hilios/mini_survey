@@ -177,5 +177,16 @@ describe User do
         end
       end
     end
+    
+    describe "watches?" do
+      it "shoult return true if user watches a survey" do
+        @user.update_attributes :watches_attributes => [{:survey => @survey}]
+        @user.watches?(@survey).should be_true
+      end
+      
+      it "shoult return true if user not watches a survey" do
+        @user.watches?(@survey).should be_false
+      end
+    end
   end
 end

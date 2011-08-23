@@ -1,8 +1,16 @@
 class SurveysController < ApplicationController
   before_filter :authenticate
-  before_filter :not_allow_duplicated_answers, :only => [:show]
-  before_filter :authorize, :only => [:edit, :update, :destroy]
+  
+  before_filter :not_allow_duplicated_answers, 
+    :only => [:show]
+    
+  before_filter :authorize, 
+    :only => [:edit, :update, :destroy]
+    
   helper_method :authorized?
+  
+  respond_to :js, 
+    :only => :watch
   
   def index
     @surveys = Survey.not_private.all
@@ -49,6 +57,18 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     @survey.destroy
     respond_with @survey
+  end
+  
+  def watch
+    @survey = Survey.find(params[:id])
+    if current_user.watches?(@survey)
+      current_user.surveys_watched.delete(@survey)
+    else
+      current_user.update_attributes :watches_attributes => [{:survey => @survey}]
+    end
+    respond_with @survey do |format|
+      format.html { redirect_to current_user }
+    end
   end
   
   private

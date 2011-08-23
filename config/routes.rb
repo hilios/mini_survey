@@ -1,9 +1,13 @@
 MiniSurvey::Application.routes.draw do
   resources :surveys do
     resources :questions
-    resources :answers, :only => [:index, :create] do
-      get :data, :on => :collection
+    resources :answers, 
+      :only => [:index, :create] do
+        get :data, 
+          :on => :collection
     end
+    get :watch, 
+      :on => :member
   end
 
   resources :users, 

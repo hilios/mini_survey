@@ -1,0 +1,12 @@
+<% partial = render "survey", :survey => @survey %>
+$('tr.survey_<%= @survey.id %>').replaceWith("<%= escape_javascript(partial) %>");
+<% if current_user.watches?(@survey) %>
+  $('table.watched').append($("<%= escape_javascript(partial) %>"));
+  $('table.watched td.empty').parent().remove();
+  // Set style
+  $('table.watched tr').removeClass('odd even');
+  $('table.watched tr:odd').addClass('odd');
+  $('table.watched tr:even').addClass('even');
+<% else %>
+  $('table.watched tr.survey_<%= @survey.id %>').remove();
+<% end %>

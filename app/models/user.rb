@@ -63,4 +63,8 @@ class User < ActiveRecord::Base
   def answered_choice?(choice)
     self.answers.where('answers.choice_id = ?', choice.is_a?(Choice) ? choice.id : choice).count > 0
   end
+  
+  def watches?(survey)
+    self.watches.where('watches.survey_id = ?', survey.is_a?(Survey) ? survey.id : survey).count > 0
+  end
 end
