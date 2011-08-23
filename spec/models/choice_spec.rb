@@ -14,7 +14,6 @@ describe Choice do
     
     it { should be_valid }
     it { should validate_presence_of(:title) }
-    it { should ensure_length_of(:title).is_at_least(3) }
   end
   
   describe "methods" do

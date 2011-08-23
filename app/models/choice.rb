@@ -4,8 +4,7 @@ class Choice < ActiveRecord::Base
   has_many    :answers
   
   validates   :title,
-    :presence => true,
-    :length => { :minimum => 3 }
+    :presence => true
     
   def total
     self.answers.count

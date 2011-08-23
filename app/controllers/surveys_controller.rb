@@ -31,12 +31,13 @@ class SurveysController < ApplicationController
     
     @survey = Survey.new(params[:survey])
     @survey.user = current_user
-    @survey.save!
+    @survey.save
     respond_with @survey
   end
 
   def update
     @survey = Survey.find(params[:id])
+    @survey.update_attributes(params[:survey])
     respond_with @survey
   end
 

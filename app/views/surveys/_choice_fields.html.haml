@@ -1,4 +1,4 @@
 .choice
   = radio_button_tag '', '', false, :disabled => true
-  = f.input :title,     :as => :string,   :label => false
+  = f.input :title, :as => :string, :label => false, :required => false
   = link_to_remove_fields('Remover', f)
