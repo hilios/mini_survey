@@ -51,8 +51,10 @@ class User < ActiveRecord::Base
   validates_integrity_of  :avatar
   validates_processing_of :avatar
   
+  after_create :set_last_login_to_now
+  
   def authenticate(*args, &block)
-    self.update_attribute :last_login, Time.now
+    set_last_login_to_now
     super(*args, &block)
   end
   
@@ -66,5 +68,11 @@ class User < ActiveRecord::Base
   
   def watches?(survey)
     self.watches.where('watches.survey_id = ?', survey.is_a?(Survey) ? survey.id : survey).count > 0
+  end
+  
+  private
+  
+  def set_last_login_to_now
+    self.update_attribute :last_login, Time.now
   end
 end

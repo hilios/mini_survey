@@ -15,12 +15,6 @@ describe Question do
     
     it { should be_valid }
     it { should validate_presence_of(:title) }
-    
-    it "should not save a question without a valid survey" do
-      @question = FactoryGirl.build(:question, :survey_id => 0)
-      @question.should_not be_valid
-      @question.survey.should be_nil
-    end
   end
   
   describe "scope" do

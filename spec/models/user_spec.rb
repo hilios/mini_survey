@@ -59,6 +59,15 @@ describe User do
     end
   end
   
+  context "after create" do
+    it "should set last_login" do
+      user = FactoryGirl.build(:user, :last_login => nil)
+      user.last_login.should be_nil
+      user.save
+      user.last_login.gmt_offset.should == Time.now.gmt_offset
+    end
+  end
+  
   describe "authentication" do
     before(:each) do
       @user = FactoryGirl.create(:user)
@@ -77,9 +86,8 @@ describe User do
     end
     
     it "should update the last_login attribute when authenticate is true" do
-      current_date = Time.now
       @user.authenticate(@user.password).should be_true
-      @user.last_login.gmt_offset.should == current_date.gmt_offset
+      @user.last_login.gmt_offset.should == Time.now.gmt_offset
     end
   end
   
