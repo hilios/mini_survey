@@ -11,7 +11,6 @@ class Survey < ActiveRecord::Base
     :allow_destroy => true,
     :reject_if => lambda { |question| question[:title].blank? }
   
-  
   scope :not_private, where('surveys.is_private = ?', false)
   
   validates   :user,

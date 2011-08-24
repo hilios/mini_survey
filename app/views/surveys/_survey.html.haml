@@ -5,7 +5,10 @@
     - else
       - star = image_tag "star_empty.png", :alt => 'Favorita'
     = link_to star, watch_survey_path(survey), :class => :watch, :remote => true
-  %td= link_to survey.title, survey
+  %td
+    = link_to survey.title, survey
+    - if survey.private?
+      = image_tag "lock.png", :alt => 'Pesquisa privada'
   %td{:width => "40%", :align => 'right'}
     %small
       Criada em

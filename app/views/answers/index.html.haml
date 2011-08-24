@@ -14,5 +14,5 @@
         %ul
           - question.choices.each do |choice|
             %li
-              = radio_button_tag '', '', current_user.answered_choice?(choice), :disabled => true
+              = radio_button_tag "choice_#{choice.id}", '', current_user.answered_choice?(choice), :disabled => true
               = choice.title

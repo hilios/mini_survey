@@ -1,8 +1,6 @@
 require 'spec_helper'
 
-feature "Surveys", %q{
-
-} do
+feature "Surveys" do
   background do
     @user = FactoryGirl.create(:user)
     @survey = FactoryGirl.create(:survey, :user => @user)
@@ -25,8 +23,33 @@ feature "Surveys", %q{
   end
   
   scenario "An anonymous user shouldn't access any survey" do
+    visit surveys_path
+    current_path.should == root_path
+    
     visit new_survey_path
     current_path.should == root_path
+    
+    visit survey_path(@survey)
+    current_path.should == root_path
+    
+    visit edit_survey_path(@survey)
+    current_path.should == root_path
+  end
+  
+  scenario "Any user could see all public surveys" do
+    surveys = FactoryGirl.create_list(:survey, 5)
+    private_surveys = FactoryGirl.create_list(:private_survey, 5)
+    sign_in
+    visit surveys_path
+    current_path.should == surveys_path
+    surveys.each do |survey|
+      page.should have_content(survey.title)
+      page.should have_xpath("//a[@href='#{survey_path(survey)}']")
+    end
+    private_surveys.each do |survey|
+      page.should have_no_content(survey.title)
+      page.should have_no_xpath("//a[@href='#{survey_path(survey)}']")
+    end
   end
   
   scenario "An user can create a survey" do
@@ -61,7 +84,7 @@ feature "Surveys", %q{
     page.should have_content("Foo my bar")
   end
   
-  scenario "An user can't edit otherelses survey" do
+  scenario "An user can't edit other elses survey" do
     other_user = FactoryGirl.create(:user)
     sign_in other_user
     visit edit_survey_path(@survey)
@@ -109,5 +132,50 @@ feature "Surveys", %q{
     end
     submit_button.click
     current_path.should == survey_answers_path(@survey)
+  end
+  
+  scenario "An user should be redirect to his answers if already answered the survey" do
+    sign_in
+    visit survey_path(@survey)
+    @survey.questions.each do |question|
+      random_choice = question.choices[rand(question.choices.size)]
+      choose("answers_question_#{question.id}_#{random_choice.id}")
+    end
+    submit_button.click
+    current_path.should == survey_answers_path(@survey)
+    # Try a new visit
+    visit survey_path(@survey)
+    current_path.should == survey_answers_path(@survey)
+  end
+  
+  scenario "An user should see the actions links if survey belongs to him" do
+    sign_in
+    visit survey_path(@survey)
+    page.should have_xpath("//a[@href='#{data_survey_answers_path(@survey)}']")
+    page.should have_xpath("//a[@href='#{edit_survey_path(@survey)}']")
+    page.should have_xpath("//a[@data-method='delete']")
+  end
+  
+  scenario "An user shouldn't see the actions links if survey belongs to him" do
+    sign_in FactoryGirl.create(:user)
+    visit survey_path(@survey)
+    page.should have_no_xpath("//a[@href='#{data_survey_answers_path(@survey)}']")
+    page.should have_no_xpath("//a[@href='#{edit_survey_path(@survey)}']")
+    page.should have_no_xpath("//a[@data-method='delete']")
+  end
+  
+  scenario "An user can mark/unmark a survey to watch" do
+    other_user = FactoryGirl.create(:user)
+    sign_in other_user
+    visit surveys_path
+    # Mark
+    page.should have_xpath("//a[@href='#{watch_survey_path(@survey)}']")
+    find(:xpath, "//a[@href='#{watch_survey_path(@survey)}']").click
+    current_path.should == user_path(other_user)
+    page.should have_content(@survey.title)
+    # Unmark
+    find(:xpath, "//a[@href='#{watch_survey_path(@survey)}']").click
+    current_path.should == user_path(other_user)
+    page.should have_no_content(@survey.title)
   end
 end
