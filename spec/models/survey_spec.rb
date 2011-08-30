@@ -7,7 +7,7 @@ describe Survey do
     it { should have_db_column(:is_private).of_type(:boolean).with_options(:default => false) }
     it { should have_db_index(:user_id).unique(false) }
     it { should belong_to(:user) }
-    it { should have_many(:questions) }
+    it { should have_many(:questions).dependent(:destroy) }
     it { should have_and_belong_to_many(:watches) }
   end
   
@@ -60,6 +60,21 @@ describe Survey do
       survey.questions_attributes = [{:title => 'foo'}, {:title => 'bar'}, {:title => nil}]
       survey.save!
       survey.questions.count.should be(2)
+    end
+  end
+  
+  describe "delegate" do
+    before(:each) do
+      @survey = FactoryGirl.create(:survey)
+    end
+    
+    it "should delegate the user_name attr to user object" do
+      @survey.user_name.should be(@survey.user.name)
+    end
+    
+    it "should fail silently if user is not present" do
+      @survey.user = nil
+      @survey.user_name.should be_nil
     end
   end
 end

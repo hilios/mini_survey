@@ -8,9 +8,9 @@ describe User do
     it { should have_db_column(:last_login).of_type(:datetime) }
     it { should have_db_column(:avatar).of_type(:string) }
     it { should have_db_index(:email) }
-    it { should have_many(:surveys) }
-    it { should have_many(:answers) }
-    it { should have_many(:watches) }
+    it { should have_many(:surveys).dependent(:destroy) }
+    it { should have_many(:answers).dependent(:destroy) }
+    it { should have_many(:watches).dependent(:destroy) }
     it { should have_and_belong_to_many(:surveys_watched) }
   end
   

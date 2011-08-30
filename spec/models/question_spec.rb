@@ -6,8 +6,8 @@ describe Question do
     it { should have_db_column(:title).of_type(:text) }
     it { should have_db_index(:survey_id).unique(false) }
     it { should belong_to(:survey) }
-    it { should have_many(:choices) }
-    it { should have_many(:answers) }
+    it { should have_many(:choices).dependent(:destroy) }
+    it { should have_many(:answers).dependent(:destroy) }
   end
   
   describe "validation" do

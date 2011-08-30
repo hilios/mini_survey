@@ -6,7 +6,7 @@ describe Choice do
     it { should have_db_column(:title).of_type(:text) }
     it { should have_db_index(:question_id).unique(false) }
     it { should belong_to(:question) }
-    it { should have_many(:answers) }
+    it { should have_many(:answers).dependent(:destroy) }
   end
   
   describe "validations" do
