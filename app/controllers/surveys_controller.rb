@@ -15,6 +15,9 @@ class SurveysController < ApplicationController
   
   respond_to :js, 
     :only => :watch
+    
+  delegate :name,
+    :to => :user, :prefix => true
   
   def index
     @surveys = Survey.not_private.all
