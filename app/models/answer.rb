@@ -1,7 +1,10 @@
 class Answer < ActiveRecord::Base
   belongs_to      :user
+  
   belongs_to      :survey
+  
   belongs_to      :choice
+  
   belongs_to      :question
   
   attr_protected  :survey, :question
