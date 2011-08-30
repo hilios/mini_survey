@@ -1,11 +1,14 @@
 class User < ActiveRecord::Base
   has_secure_password
   
-  has_many :surveys
+  has_many :surveys,
+    :dependent => :destroy
   
-  has_many :answers
+  has_many :answers,
+    :dependent => :destroy
   
-  has_many :watches
+  has_many :watches,
+    :dependent => :destroy
   
   has_and_belongs_to_many :surveys_watched,
     :join_table => :watches, :class_name => 'Survey',

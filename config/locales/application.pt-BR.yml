@@ -2,12 +2,12 @@
   flash:
     actions:
       create:
-        notice: "{resource_name} foi criado com sucesso"
+        notice: "%{resource_name} foi criado com sucesso"
       update:
-        notice: "{resource_name} foi atualizado com sucesso"
+        notice: "%{resource_name} foi atualizado com sucesso"
       destroy:
-        notice: "{resource_name} foi apagado"
-        alert: "{resource_name} não pode ser apagado"
+        notice: "%{resource_name} foi apagado"
+        alert: "%{resource_name} não pode ser apagado"
   errors:
     messages:
       not_a_email: "não é válido"

@@ -1,7 +1,8 @@
 class Choice < ActiveRecord::Base
   belongs_to  :question
   
-  has_many    :answers
+  has_many    :answers,
+    :dependent => :destroy
   
   validates   :title,
     :presence => true
